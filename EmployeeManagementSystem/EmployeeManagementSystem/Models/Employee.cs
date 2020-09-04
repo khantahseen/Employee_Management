@@ -32,6 +32,7 @@ namespace EmployeeManagementSystem.Models
 
         [Required]
         public int DepartmentID { get; set; }
+        public string DName { get; set; }
         public Department department { get; set; }
     }
 }

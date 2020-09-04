@@ -1,9 +1,0 @@
-C:\Users\asus\Desktop\nnnn\EmployeeManagementSystem-ADO.NET\EMDB\bin\Debug\EMDB.dacpac
-C:\Users\asus\Desktop\nnnn\EmployeeManagementSystem-ADO.NET\EMDB\bin\Debug\EMDB.dll
-C:\Users\asus\Desktop\nnnn\EmployeeManagementSystem-ADO.NET\EMDB\bin\Debug\EMDB.pdb
-C:\Users\asus\Desktop\nnnn\EmployeeManagementSystem-ADO.NET\EMDB\obj\Debug\Model.xml
-C:\Users\asus\Desktop\nnnn\EmployeeManagementSystem-ADO.NET\EMDB\obj\Debug\refactor.xml
-C:\Users\asus\Desktop\nnnn\EmployeeManagementSystem-ADO.NET\EMDB\obj\Debug\postdeploy.sql
-C:\Users\asus\Desktop\nnnn\EmployeeManagementSystem-ADO.NET\EMDB\obj\Debug\predeploy.sql
-C:\Users\asus\Desktop\nnnn\EmployeeManagementSystem-ADO.NET\EMDB\obj\Debug\EMDB.dll
-C:\Users\asus\Desktop\nnnn\EmployeeManagementSystem-ADO.NET\EMDB\obj\Debug\EMDB.pdb
