@@ -37,7 +37,6 @@ namespace EmployeeManagementSystem.Models
         public void AddEmployee(Employee employee)
         {
             List<Employee> getMaxId = con.Query<Employee>("select * from Employee").ToList();
-            // employee.Id = getMaxIdofEmployee.Max(e => e.Id) + 1;
             string query = "INSERT INTO Employee(Name,Surname,Address,Qualification,ContactNumber,DepartmentID) VALUES(@Name,@Surname,@Address,@Qualification,@ContactNumber,@DepartmentID)";
             DynamicParameters parameters = new DynamicParameters();
             // parameters.Add("@Id", employee.Id);
