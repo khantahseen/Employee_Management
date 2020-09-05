@@ -26,8 +26,15 @@ using EmployeeManagementSystem.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "C:\Users\asus\Documents\GitHub\Employee_Management\EmployeeManagementSystem\EmployeeManagementSystem\Views\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"0aa07997cef09066f0c784721652eef4b38cfb35", @"/Views/Home/Privacy.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"20cc1bc049806186d561824bb7c23212964a7677", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"0b40a4993b604f72565a35bfbdad96bb5cd18591", @"/Views/_ViewImports.cshtml")]
     public class Views_Home_Privacy : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998

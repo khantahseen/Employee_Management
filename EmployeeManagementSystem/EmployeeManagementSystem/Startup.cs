@@ -5,6 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using EmployeeManagementSystem.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace EmployeeManagementSystem
 {
@@ -22,6 +25,14 @@ namespace EmployeeManagementSystem
         {
             services.AddControllersWithViews();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MYDb")));
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                                .RequireAuthenticatedUser()
+                                .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
             services.AddScoped<IDepartmentRepository,DepartmentRepository>();
             services.AddScoped<IEmployeeRepository,EmployeeRepository>();
 
@@ -44,8 +55,9 @@ namespace EmployeeManagementSystem
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {
