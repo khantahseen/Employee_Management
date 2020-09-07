@@ -25,7 +25,7 @@ namespace EmployeeManagementSystem
         {
             services.AddControllersWithViews();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MYDb")));
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
             services.AddMvc(config =>
             {
                 var policy = new AuthorizationPolicyBuilder()
@@ -33,6 +33,8 @@ namespace EmployeeManagementSystem
                                 .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
+
+            //services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
             services.AddScoped<IDepartmentRepository,DepartmentRepository>();
             services.AddScoped<IEmployeeRepository,EmployeeRepository>();
 
