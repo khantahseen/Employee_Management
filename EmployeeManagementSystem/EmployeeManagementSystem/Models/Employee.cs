@@ -19,6 +19,11 @@ namespace EmployeeManagementSystem.Models
         [Required]
         public string Surname { get; set; }
 
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+
         [StringLength(100)]
         [Required]
         public string Address { get; set; }

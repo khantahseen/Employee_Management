@@ -7,16 +7,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EmployeeManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace EmployeeManagementSystem.Controllers
 {
     public class EmployeesController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
-        public EmployeesController(AppDbContext context)
+        public EmployeesController(AppDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.roleManager = roleManager;
         }
 
         // GET: Employees
@@ -24,7 +31,17 @@ namespace EmployeeManagementSystem.Controllers
         public async Task<IActionResult> Index()
         {
             var appDbContext = _context.employees.Include(e => e.department);
-            return View(await appDbContext.ToListAsync());
+            if(User.IsInRole("Admin")||User.IsInRole("HR"))
+            {
+                return View(await appDbContext.ToListAsync());
+            }
+            else 
+            {
+                var dep = appDbContext.Where(m => m.Email == User.Identity.Name).First().department.Name;
+                var sameDep = appDbContext.Where(d => d.department.Name == dep);
+                return View(await sameDep.ToListAsync());
+            }
+            
         }
 
         // GET: Employees/Details/5
@@ -61,11 +78,27 @@ namespace EmployeeManagementSystem.Controllers
         [Authorize(Roles = "Admin,HR")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,Name,Surname,Address,Qualification,ContactNumber,DepartmentID")] Employee employee)
+        public async Task<IActionResult> Create([Bind("EmployeeId,Name,Surname,Email,Address,Qualification,ContactNumber,DepartmentID")] Employee employee)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(employee);
+                string password = employee.Name.ToString() + "@ABC123";
+                var uName = employee.Email;
+                var uEmail = employee.Email;
+                var user = new IdentityUser { UserName=uName, Email=uEmail };
+                var result = await userManager.CreateAsync(user, password);
+
+                if(result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(user, "Employee");
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                foreach(var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -97,7 +130,7 @@ namespace EmployeeManagementSystem.Controllers
         [Authorize(Roles = "Admin,HR")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EmployeeId,Name,Surname,Address,Qualification,ContactNumber,DepartmentID")] Employee employee)
+        public async Task<IActionResult> Edit(int id, [Bind("EmployeeId,Name,Surname,Email,Address,Qualification,ContactNumber,DepartmentID")] Employee employee)
         {
             if (id != employee.EmployeeId)
             {
@@ -155,6 +188,8 @@ namespace EmployeeManagementSystem.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var employee = await _context.employees.FindAsync(id);
+            var user = await userManager.FindByEmailAsync(employee.Email);
+            await userManager.DeleteAsync(user);
             _context.employees.Remove(employee);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
