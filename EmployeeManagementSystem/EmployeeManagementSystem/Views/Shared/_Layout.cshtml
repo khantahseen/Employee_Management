@@ -36,19 +36,19 @@
                                 <ul class="navbar-nav">
                                     @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("HR")))
                                     {
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Departments" asp-action="Index">Department</a>
-                                        </li>
-                                    }
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Employees" asp-action="Index">Employee</a>
-                                    </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Departments" asp-action="Index">Department</a>
+                                </li>
+
+                                                <li class="nav-item">
+                                                    <a class="nav-link text-dark" asp-area="" asp-controller="Employees" asp-action="Index">Employee</a>
+                                                </li>}
+
                                     @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                                     {
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="ListRoles">CREATE</a>
-                                        </li>
-                                    }
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="ListRoles">Roles</a>
+                                </li>}
                                 </ul>
                                 <ul class="navbar-nav ml-auto">
 
@@ -65,11 +65,11 @@
  }
                     else
                     {
-                        <li class="nav-item">
+                        <!--<li class="nav-item">
                             <a class="nav-link" asp-controller="account" asp-action="register">
                                 Register
                             </a>
-                        </li>
+                        </li>-->
                                         <li class="nav-item">
                                             <a class="nav-link" asp-controller="account" asp-action="login">
                                                 Login

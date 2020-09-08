@@ -30,57 +30,82 @@ namespace EmployeeManagementSystem.Controllers
         }
 
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index() 
         {
-
-            var users = userManager.Users;
-            if (users != null)
+            IdentityRole iR1 = new IdentityRole
             {
-                return View();
-           }
-            else
+                Name = "Admin"
+            };
+            IdentityResult roleResult1 = await roleManager.CreateAsync(iR1);
+            foreach (IdentityError error in roleResult1.Errors)
             {
-                
-                var adminName = "tash@gmail.com";
-                var adminEmail = "tash@gmail.com";
-                var adminPassword = "Tash@123";
-                var user = new IdentityUser
-                {
-                    UserName = adminName,
-                    Email = adminEmail
-                };
-                var result = await userManager.CreateAsync(user, adminPassword);
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(user, "Admin");
-                    return RedirectToAction("Index");
-                }
+                ModelState.AddModelError("", error.Description);
+            }
 
-                
-                var hrName = "taif@gmail.com";
-                var hrEmail = "taif@gmail.com";
-                var hrPassword = "Taif@123";
-                var user2 = new IdentityUser
-                {
-                    UserName = hrName,
-                    Email = hrEmail
-                };
-                var result2 = await userManager.CreateAsync(user2, hrPassword);
+            IdentityRole iR2 = new IdentityRole
+            {
+                Name = "HR"
+            };
+            IdentityResult roleResult2 = await roleManager.CreateAsync(iR2);
+            foreach (IdentityError error in roleResult2.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
 
-                if (result2.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(user2, "HR");
-                    return RedirectToAction("Index");
-                }
+            IdentityRole iR3 = new IdentityRole
+            {
+                Name = "Employee"
+            };
+            IdentityResult roleResult3 = await roleManager.CreateAsync(iR3);
+           
+            foreach (IdentityError error in roleResult3.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
 
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-                return View();
-           }
+
+
+            var adminName = "tash@gmail.com";
+            var adminEmail = "tash@gmail.com";
+            var adminPassword = "Tash@123";
+            var user = new IdentityUser
+            {
+                UserName = adminName,
+                Email = adminEmail
+            };
+            var result = await userManager.CreateAsync(user, adminPassword);
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user, "Admin");
+                return RedirectToAction("Index");
+            }
+
+
+            var hrName = "taif@gmail.com";
+            var hrEmail = "taif@gmail.com";
+            var hrPassword = "Taif@123";
+            var user2 = new IdentityUser
+            {
+                UserName = hrName,
+                Email = hrEmail
+            };
+            var result2 = await userManager.CreateAsync(user2, hrPassword);
+
+            if (result2.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user2, "HR");
+                return RedirectToAction("Index");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+            return View();
 
         }
+
+
 
 
         public IActionResult Privacy()
