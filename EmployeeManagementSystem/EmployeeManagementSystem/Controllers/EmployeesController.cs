@@ -107,7 +107,7 @@ namespace EmployeeManagementSystem.Controllers
         }
 
         // GET: Employees/Edit/5
-        [Authorize(Roles = "Admin,HR")]
+        [Authorize(Roles = "Admin,HR, Employee")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -127,7 +127,7 @@ namespace EmployeeManagementSystem.Controllers
         // POST: Employees/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin,HR")]
+        [Authorize(Roles = "Admin,HR,Employee")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("EmployeeId,Name,Surname,Email,Address,Qualification,ContactNumber,DepartmentID")] Employee employee)
@@ -199,5 +199,7 @@ namespace EmployeeManagementSystem.Controllers
         {
             return _context.employees.Any(e => e.EmployeeId == id);
         }
+
+
     }
 }

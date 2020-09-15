@@ -61,9 +61,17 @@
                 @Html.DisplayFor(modelItem => item.department.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.EmployeeId">Edit</a> |
+               <!-- <a asp-action="Edit" asp-route-id="@item.EmployeeId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.EmployeeId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EmployeeId">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.EmployeeId">Delete</a>-->
+
+                @if (!User.IsInRole("Employee"))
+                {
+                    <span> | </span>
+                    <a asp-action="Edit" asp-route-id="@item.EmployeeId">Edit</a>
+                    <span> | </span>
+                    <a asp-action="Delete" asp-route-id="@item.EmployeeId">Delete</a>
+                }
             </td>
         </tr>
 }

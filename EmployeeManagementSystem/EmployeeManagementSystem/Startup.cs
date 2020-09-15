@@ -8,6 +8,7 @@ using EmployeeManagementSystem.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using EmployeeManagementSystem.Hubs;
 
 namespace EmployeeManagementSystem
 {
@@ -37,6 +38,7 @@ namespace EmployeeManagementSystem
             //services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
             services.AddScoped<IDepartmentRepository,DepartmentRepository>();
             services.AddScoped<IEmployeeRepository,EmployeeRepository>();
+            services.AddSignalR();
 
         }
 
@@ -59,7 +61,11 @@ namespace EmployeeManagementSystem
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<NotificationHub>("/NotificationHub");
+            });
+
 
             app.UseEndpoints(endpoints =>
             {
