@@ -8,11 +8,11 @@ namespace EmployeeManagementSystem.Hubs
 {
     public class NotificationHub:Hub
     {
-        public async Task SendAddEmployeeMessage(string name, string surname)
+        /*public async Task SendAddEmployeeMessage(string name, string surname)
         {
             var groupName = "Employee";
             await Clients.Group(groupName).SendAsync("AddEmployeeMessage", name, surname);
-        }
+        }*/
 
         public async Task SendAddDepartmentMessage(string name)
         {

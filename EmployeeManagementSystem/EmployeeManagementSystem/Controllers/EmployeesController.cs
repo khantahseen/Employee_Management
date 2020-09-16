@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using EmployeeManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
+using EmployeeManagementSystem.Hubs;
 
 namespace EmployeeManagementSystem.Controllers
 {
@@ -17,13 +19,15 @@ namespace EmployeeManagementSystem.Controllers
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IHubContext<NotificationHub> hubContext;
 
-        public EmployeesController(AppDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public EmployeesController(AppDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager, IHubContext<NotificationHub> hubContext)
         {
             _context = context;
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.roleManager = roleManager;
+            this.hubContext = hubContext;
         }
 
         // GET: Employees
@@ -83,6 +87,15 @@ namespace EmployeeManagementSystem.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(employee);
+                var emplist = _context.employees.Include(e => e.department).ToList();
+                foreach(var e in emplist)
+                {
+                    if(e.DepartmentID==employee.DepartmentID)
+                    {
+                        var u = userManager.FindByEmailAsync(e.Email).Result;
+                        await hubContext.Clients.User(u.Id).SendAsync("AddEmployeeMessage", employee.Name, employee.Surname);
+                    }
+                }
                 string password = employee.Name.ToString() + "@ABC123";
                 var uName = employee.Email;
                 var uEmail = employee.Email;

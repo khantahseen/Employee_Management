@@ -42,7 +42,7 @@ try {
 }
 
 
-if (document.getElementById("createEmployeeButton")) {
+/*if (document.getElementById("createEmployeeButton")) {
     document.getElementById("createEmployeeButton").addEventListener("click", function (event) {
         var name = document.getElementById("nameInput").value;
         var surname = document.getElementById("surnameInput").value;
@@ -50,7 +50,7 @@ if (document.getElementById("createEmployeeButton")) {
             return console.error(err.toString());
         });
     });
-}
+}*/
 
 if (document.getElementById("createDepartmentButton")) {
     document.getElementById("createDepartmentButton").addEventListener("click", function (event) {

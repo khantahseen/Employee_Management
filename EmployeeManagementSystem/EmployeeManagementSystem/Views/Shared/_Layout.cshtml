@@ -67,9 +67,9 @@
 
                                         <li class="nav-item">
                                             @{
-                                                var id = context.employees.Where(e => e.Email == User.Identity.Name).First().EmployeeId;
-                                            }
-                                            <a class="nav-link" asp-controller="Employees" asp-action="Details" asp-route-id="@id">My Profile</a>
+                                               var id = context.employees.Where(e => e.Email == User.Identity.Name).First().EmployeeId;
+}
+                                            <a class="nav-link" asp-controller="Employees" asp-action="Details" asp-route-id="@id" >My Profile</a>
                                         </li>
 
 
