@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\EmployeeManagementSystem"
+    "\\EmployeeManagementSystem",
+    "\\EmployeeManagementSystem\\EmployeeManagementSystem"
   ],
   "SelectedNode": "\\EmployeeManagementSystem\\EmployeeManagementSystem.sln",
   "PreviewInSolutionExplorer": false
