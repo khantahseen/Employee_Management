@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EmployeeManagementSystem.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace EmployeeManagementSystem.Controllers
 {
@@ -14,10 +15,16 @@ namespace EmployeeManagementSystem.Controllers
     public class EmployeesApiController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
-        public EmployeesApiController(AppDbContext context)
+        public EmployeesApiController(AppDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.roleManager = roleManager;
         }
 
         // GET: api/EmployeesApi
@@ -81,7 +88,19 @@ namespace EmployeeManagementSystem.Controllers
         public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
         {
             _context.employees.Add(employee);
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
+            string password = employee.Name.ToString() + "@ABC123";
+            var uName = employee.Email;
+            var uEmail = employee.Email;
+            var user = new IdentityUser { UserName = uName, Email = uEmail };
+            var result = await userManager.CreateAsync(user, password);
+
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user, "Employee");
+                await _context.SaveChangesAsync();
+                //return RedirectToAction(nameof(Index));
+            }
 
             return CreatedAtAction("GetEmployee", new { id = employee.EmployeeId }, employee);
         }
@@ -95,10 +114,10 @@ namespace EmployeeManagementSystem.Controllers
             {
                 return NotFound();
             }
-
+            var user = await userManager.FindByEmailAsync(employee.Email);
+            await userManager.DeleteAsync(user);
             _context.employees.Remove(employee);
             await _context.SaveChangesAsync();
-
             return employee;
         }
 
