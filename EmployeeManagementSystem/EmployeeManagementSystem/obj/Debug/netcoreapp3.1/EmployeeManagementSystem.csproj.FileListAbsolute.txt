@@ -665,6 +665,7 @@ C:\Users\asus\Documents\GitHub\Employee_Management\EmployeeManagementSystem\Empl
 C:\Users\asus\Documents\GitHub\Employee_Management\EmployeeManagementSystem\EmployeeManagementSystem\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\asus\Documents\GitHub\Employee_Management\EmployeeManagementSystem\EmployeeManagementSystem\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\asus\Documents\GitHub\Employee_Management\EmployeeManagementSystem\EmployeeManagementSystem\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+C:\Users\asus\Documents\GitHub\Employee_Management\EmployeeManagementSystem\EmployeeManagementSystem\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\asus\Documents\GitHub\Employee_Management\EmployeeManagementSystem\EmployeeManagementSystem\obj\Debug\netcoreapp3.1\EmployeeManagementSystem.csproj.CoreCompileInputs.cache
 C:\Users\asus\Documents\GitHub\Employee_Management\EmployeeManagementSystem\EmployeeManagementSystem\obj\Debug\netcoreapp3.1\EmployeeManagementSystem.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\asus\Documents\GitHub\Employee_Management\EmployeeManagementSystem\EmployeeManagementSystem\obj\Debug\netcoreapp3.1\EmployeeManagementSystem.MvcApplicationPartsAssemblyInfo.cache

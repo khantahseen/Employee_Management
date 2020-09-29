@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EmployeeManagementSystem.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EmployeeManagementSystem.Controllers
 {
@@ -28,6 +29,7 @@ namespace EmployeeManagementSystem.Controllers
         }
 
         // GET: api/EmployeesApi
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Employee>>> Getemployees()
         {
@@ -52,7 +54,9 @@ namespace EmployeeManagementSystem.Controllers
         // PUT: api/EmployeesApi/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin,HR,Employee")]
         public async Task<IActionResult> PutEmployee(int id, Employee employee)
         {
             if (id != employee.EmployeeId)
@@ -85,6 +89,7 @@ namespace EmployeeManagementSystem.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
+        [Authorize(Roles = "Admin,HR")]
         public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
         {
             _context.employees.Add(employee);
@@ -107,6 +112,7 @@ namespace EmployeeManagementSystem.Controllers
 
         // DELETE: api/EmployeesApi/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,HR")]
         public async Task<ActionResult<Employee>> DeleteEmployee(int id)
         {
             var employee = await _context.employees.FindAsync(id);

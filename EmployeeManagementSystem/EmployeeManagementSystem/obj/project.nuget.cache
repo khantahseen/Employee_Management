@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "RWI4UgIXw4EYWDRtsqHevOGUatMoY/g/VKGd5HJu2pGmSTqlvUr0xRwManvbyP7cBTqodjWLlmwZNN8OMaFhtw==",
+  "dgSpecHash": "gUyV9lSu6j+8XAZxPNHZtC1CESrATQi+2fpnGE5gktGKO4+4XfFsM8X7m506DMeC8rfTrDpN5Tb7bR0cftptuQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\asus\\Documents\\GitHub\\Employee_Management\\EmployeeManagementSystem\\EmployeeManagementSystem\\EmployeeManagementSystem.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\asus\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.8\\microsoft.aspnetcore.authentication.jwtbearer.3.1.8.nupkg.sha512",
     "C:\\Users\\asus\\.nuget\\packages\\microsoft.aspnetcore.authorization\\2.2.0\\microsoft.aspnetcore.authorization.2.2.0.nupkg.sha512",
     "C:\\Users\\asus\\.nuget\\packages\\microsoft.aspnetcore.connections.abstractions\\2.2.0\\microsoft.aspnetcore.connections.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\asus\\.nuget\\packages\\microsoft.aspnetcore.cors\\2.2.0\\microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",

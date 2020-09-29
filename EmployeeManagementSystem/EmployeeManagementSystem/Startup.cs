@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using EmployeeManagementSystem.Hubs;
 using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace EmployeeManagementSystem
 {
@@ -35,18 +38,31 @@ namespace EmployeeManagementSystem
             services.AddControllersWithViews();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MYDb")));
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
-            //services.AddMvc(config =>
-            //{
-             //   var policy = new AuthorizationPolicyBuilder()
-            //                    .RequireAuthenticatedUser()
-                //                .Build();
-              //  config.Filters.Add(new AuthorizeFilter(policy));
-           // });
-
-            //services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
             services.AddScoped<IDepartmentRepository,DepartmentRepository>();
             services.AddScoped<IEmployeeRepository,EmployeeRepository>();
             services.AddSignalR();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+
+           // Adding Jwt Bearer  
+           .AddJwtBearer(options =>
+           {
+               options.SaveToken = true;
+               options.RequireHttpsMetadata = false;
+               options.TokenValidationParameters = new TokenValidationParameters()
+               {
+                   ValidateIssuer = true,
+                   ValidateAudience = true,
+                   ValidAudience = Configuration["JWT:ValidAudience"],
+                   ValidIssuer = Configuration["JWT:ValidIssuer"],
+                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+               };
+           });
 
         }
 
