@@ -31,6 +31,7 @@ namespace EmployeeManagementSystem.Controllers
         // GET: api/EmployeesApi
         
         [HttpGet]
+        [Authorize(Roles = "Admin,HR,Employee")]
         public async Task<ActionResult<IEnumerable<Employee>>> Getemployees()
         {
             var appDbContext = _context.employees.Include(e => e.department);
@@ -39,6 +40,7 @@ namespace EmployeeManagementSystem.Controllers
 
         // GET: api/EmployeesApi/5
         [HttpGet("{id}")]
+        
         public async Task<ActionResult<Employee>> GetEmployee(int id)
         {
             var employee = await _context.employees.FindAsync(id);

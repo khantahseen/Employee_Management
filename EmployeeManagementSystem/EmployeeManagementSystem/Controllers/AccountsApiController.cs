@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using EmployeeManagementSystem.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -69,6 +70,25 @@ namespace EmployeeManagementSystem.Controllers
                 });
             }
             return Unauthorized();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("ForgetPassword")]
+        public async Task<IActionResult> ForgetPassword(ForgetResetPassword model)
+        {
+            if (model.email!=null)
+            {
+                var user = await userManager.FindByEmailAsync(model.email);
+                var token = await userManager.GeneratePasswordResetTokenAsync(user);
+                var changePassword = await userManager.ResetPasswordAsync(user, token, model.confirmPassword);
+
+                if (changePassword.Succeeded)
+                {
+                    return Ok();
+                }
+            }
+            return BadRequest(new { message = "Email Not Found!!" });
         }
 
     }
