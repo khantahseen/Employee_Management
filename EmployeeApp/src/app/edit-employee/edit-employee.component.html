@@ -1,0 +1,59 @@
+<div style="padding-right:30px ;">
+    <h1>Create</h1>
+    <h4>Employee</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form #form="ngForm">
+                <input type="hidden" name="id" [value]='employeeValue.EmployeeId'/>
+                <div class="form-group">
+                    <label class="control-label" for="Name">Name:</label>
+                    <input class="form-control" for="Name" type="text" id="nameInput" name="nameInput" [(ngModel)]='employeeValue.Name' required/>
+                    
+                </div>
+    
+                <div class="form-group">
+                    <label class="control-label" for="Surname">Sur-Name:</label>
+                    <input class="form-control" for="Surname" type="text" id="surnameInput" name="surnameInput" [(ngModel)]='employeeValue.Surname' required/>
+                   
+                </div>
+    
+                <div class="form-group">
+                    <label class="control-label" for="Email">Email:</label>
+                    <input class="form-control" for="Email" type="text" id="emailInput" name="emailInput" [(ngModel)]='employeeValue.Email' required/>
+                    
+                </div>
+    
+                <div class="form-group">
+                    <label class="control-label" for="Address">Address:</label>
+                    <input class="form-control" for="Address" type="text" id="addressInput" name="addressInput" [(ngModel)]='employeeValue.Address' required/>
+                    
+                </div>
+    
+                <div class="form-group">
+                    <label class="control-label" for="Qualification">Qualification:</label>
+                    <input class="form-control" for="Qualification" type="text" id="qualificationInput" name="qualificationInput" [(ngModel)]='employeeValue.Qualification' required/>
+                    
+                </div>
+    
+                <div class="form-group">
+                    <label class="control-label" for="ContactNumber">ContactNumber:</label>
+                    <input class="form-control" for="ContactNumber" type="text" id="CNInput" name="CNInput" [(ngModel)]='employeeValue.ContactNumber' required/>
+                    
+                </div>
+    
+                <div class="form-group">
+                    <label class="control-label" for="dept">Department</label>
+                    <select
+                      class="form-control" for="dept" id="dept" name="dept" [(ngModel)]='employeeValue.DepartmentID' required>
+                      <option *ngFor="let type of department" [ngValue]="type.DepartmentID">{{ type.Name }}</option>
+                    </select>
+                  </div>
+    
+                  <div>
+                    <input [disabled]="!form.valid" class='btn btn-primary' type="button" value="Edit" (click)='editemployee()'>
+                  </div>
+            </form>
+        </div>
+    </div>
+    </div>

@@ -1,0 +1,21 @@
+<h1>Create</h1>
+<h4>Employee</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form #form="ngForm">
+            <input type="hidden" name="id" [value]='departmentValue.DepartmentID'/>
+            <div class="form-group">
+                <label class="control-label" for="Name">Name:</label>
+                <input class="form-control" for="Name" type="text" id="nameInput" name="nameInput" [(ngModel)]='departmentValue.Name' required/>
+                
+            </div>
+
+            <div>
+                <input [disabled]="!form.valid" class='btn btn-primary' type="button" value="Edit Department" (click)='editdepartment()'>
+            </div>
+        </form>
+    </div>
+</div>
+
+            

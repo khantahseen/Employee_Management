@@ -23,7 +23,7 @@ namespace EmployeeManagementSystem.Controllers
 
         // GET: api/DepartmentsApi
         [HttpGet]
-        [Authorize(Roles = "Admin, HR")]
+        [Authorize(Roles = "Admin, HR, Employee")]
         public async Task<ActionResult<IEnumerable<Department>>> Getdepartments()
         {
             return await _context.departments.ToListAsync();

@@ -1,0 +1,28 @@
+<div style="padding-right:30px ;">
+    <h3>User-Login</h3>
+    
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form #form="ngForm">
+                
+                <div class="form-group">
+                    <label class="control-label" for="Email">Email:</label>
+                    <input class="form-control" for="Email" type="text" id="amilInput" name="emailInput" [(ngModel)]='loginValue.Email' required/>
+                    
+                </div>
+    
+                <div class="form-group">
+                    <label class="control-label" for="Password">Password:</label>
+                    <input class="form-control" for="Password" type="password" id="passwordInput" name="passwordInput" [(ngModel)]='loginValue.Password' required/>
+                   
+                </div>
+
+                <div>
+                    <input [disabled]="!form.valid" class='btn btn-primary' type="button" value="LogIn" (click)='logIn()' [routerLink]="['/empList']">
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

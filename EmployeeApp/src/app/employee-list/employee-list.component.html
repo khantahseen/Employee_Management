@@ -1,0 +1,48 @@
+<h3 class="text-center">Employee List</h3>
+<div>
+    <div>
+      <div class='row' style="padding:10px">
+        
+        <div class='col-md-2'>
+        <button class='btn btn-primary' [routerLink]="['/addEmp']">
+            Add Employee
+        </button>
+      </div>
+      <div *ngIf="!(employeedata.checkRoleAdmin()||employeedata.checkRoleHR())">
+        <button class='btn btn-primary' [routerLink]="['/empList/editEmp/',emp.EmployeeId]">
+          update Employee
+        </button>
+      </div>
+       
+       
+    
+    </div>
+      <div class='table-responsive'>
+        <table class='table'>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>SURNAME</th>
+              <th>EMAIL</th>
+              <th>ADDRESS</th>
+              <th>QUALIFICATION</th>
+              <th>CONTACTNUMBER</th>
+              <th>DEPARTMENT NAME</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let e of empwithsamedept'>
+              <td>{{e.Name}}</td>
+              <td>{{e.Surname}}</td>
+              <td>{{e.Email}}</td>
+              <td>{{e.Address}}</td>
+              <td>{{e.Qualification}}</td>
+              <td>{{e.ContactNumber}}</td>
+              <td>{{e.department.Name}}</td>
+              <td *ngIf="(employeedata.checkRoleAdmin()||employeedata.checkRoleHR())"><button class='btn btn-primary' [routerLink]="['/empList/editEmp/',e.EmployeeId]">Edit</button></td>
+              <td *ngIf="(employeedata.checkRoleAdmin()||employeedata.checkRoleHR())"><button class='btn btn-primary' (click)='delete(e.EmployeeId)'>Delete</button></td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>

@@ -1,0 +1,29 @@
+<h3 class="text-center">Department List</h3>
+<div>
+    <div>
+      <div class='row' style="padding:10px">
+        
+        <div class='col-md-2'>
+        <button class='btn btn-primary' [routerLink]="['/addDep']">
+            Add Department
+        </button>
+    </div>
+    </div>
+      <div class='table-responsive'>
+        <table class='table'>
+          <thead>
+            <tr>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let dep of d1'>
+              <td>{{dep.Name}}</td>
+              <td><button class='btn btn-primary' [routerLink]="['/deptList/editDep/',dep.DepartmentID]">Edit</button></td>
+              <td><button class='btn btn-primary' (click)='delete(dep.DepartmentID)'>Delete</button></td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
+
