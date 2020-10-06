@@ -13,6 +13,8 @@ using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using System.Threading.Tasks;
 
 namespace EmployeeManagementSystem
 {
@@ -62,7 +64,39 @@ namespace EmployeeManagementSystem
                    ValidIssuer = Configuration["JWT:ValidIssuer"],
                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
                };
+               options.Events = new JwtBearerEvents
+               {
+                   OnMessageReceived = context =>
+                   {
+                       var accessToken = context.Request.Query["access_token"];
+
+                       // If the request is for our hub...
+                       var path = context.HttpContext.Request.Path;
+                       if (!string.IsNullOrEmpty(accessToken) &&
+                           (path.StartsWithSegments("/NotificationHub")))
+                       {
+                           // Read the token out of the query string
+                           context.Token = accessToken;
+                       }
+                       return Task.CompletedTask;
+                   }
+               };
            });
+
+            var corsBuilder = new CorsPolicyBuilder();
+            //corsBuilder.AllowAnyOrigin(); // For anyone access.
+            corsBuilder.WithOrigins(new[] { "http://localhost:4200" }); // for a specific url. Don't add a forward slash on the end!
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowCredentials();
+            corsBuilder.AllowAnyMethod();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
+            });
+            services.AddSignalR(options =>
+            {
+                options.EnableDetailedErrors = true;
+            });
 
         }
 
@@ -80,10 +114,11 @@ namespace EmployeeManagementSystem
                 app.UseHsts();
             }
 
-            app.UseCors(options =>
-            options.WithOrigins("http://localhost:4200")
-           .AllowAnyMethod()
-           .AllowAnyHeader());
+            app.UseCors("SiteCorsPolicy");
+            //app.UseCors(options =>
+            //options.WithOrigins("http://localhost:4200")
+            //.AllowAnyMethod()
+            //.AllowAnyHeader());
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

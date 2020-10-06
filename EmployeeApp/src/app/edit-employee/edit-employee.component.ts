@@ -58,7 +58,7 @@ export class EditEmployeeComponent implements OnInit {
         return this.edata.getEmployees();
       }
     );
-    //this.route.navigate(['/empList']);
+    this.route.navigate(['/empList']);
   }
 
 }

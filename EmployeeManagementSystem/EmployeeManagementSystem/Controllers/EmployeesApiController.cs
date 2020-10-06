@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using EmployeeManagementSystem.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
+using EmployeeManagementSystem.Hubs;
 
 namespace EmployeeManagementSystem.Controllers
 {
@@ -19,13 +21,15 @@ namespace EmployeeManagementSystem.Controllers
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IHubContext<NotificationHub> hubContext;
 
-        public EmployeesApiController(AppDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public EmployeesApiController(AppDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager, IHubContext<NotificationHub> hubContext)
         {
             _context = context;
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.roleManager = roleManager;
+            this.hubContext = hubContext;
         }
 
         // GET: api/EmployeesApi
@@ -71,6 +75,9 @@ namespace EmployeeManagementSystem.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                var group1 = "Admin";
+                var group2 = "HR";
+                await this.hubContext.Clients.Groups(group1, group2).SendAsync("employeeEdit", employee.Name + " " + employee.Surname + " edited their Profile");
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -106,6 +113,12 @@ namespace EmployeeManagementSystem.Controllers
             {
                 await userManager.AddToRoleAsync(user, "Employee");
                 await _context.SaveChangesAsync();
+                var name = employee.Name;
+                var surname = employee.Surname;
+                var dept = _context.departments.Where(d => d.DepartmentID == employee.DepartmentID).First().Name;
+                var grpName = "Employee" + dept;
+                await this.hubContext.Clients.Group(grpName).SendAsync("employeeAdded", employee.Name + " " + employee.Surname + " was added as an Employee to your Department");
+                //await this.hubContext.Clients.All.SendAsync("employeeAdded", employee.Name +" "+employee.Surname+ " was added as an Employee");
                 //return RedirectToAction(nameof(Index));
             }
 

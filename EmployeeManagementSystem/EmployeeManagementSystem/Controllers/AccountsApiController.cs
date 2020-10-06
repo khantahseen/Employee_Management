@@ -45,12 +45,14 @@ namespace EmployeeManagementSystem.Controllers
                 var authClaims = new List<Claim>
                 {
                     new Claim("name", user.UserName),
+                    new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
 
                 foreach (var userRole in userRoles)
                 {
                     authClaims.Add(new Claim("role", userRole));
+                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
                 }
 
                 var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));

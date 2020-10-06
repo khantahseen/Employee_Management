@@ -44,10 +44,11 @@ export class DataService {
       console.log('decodedJwtJsonData: ' + decodedJwtJsonData);
       console.log('decodedJwtData: ' + decodedJwtData);
       console.log('Is admin: ' + isRole);
+      this.route.navigate(['/empList']);
       //console.log('Name:' + decodedJwtData.name);
     });
       //(c=>{console.log(c)});
-    this.route.navigate(['/empList']);
+    
     }
 
     checkRoleAdmin(): boolean {

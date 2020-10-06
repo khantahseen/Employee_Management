@@ -4,6 +4,7 @@ import {employee} from '../Models/Employee';
 import { NgForm } from "@angular/forms";
 import { Router } from '@angular/router';
 import { DataService } from '../Shared/data.service';
+import * as signalR from '@aspnet/signalr';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class AddDepartmentComponent implements OnInit {
   constructor(private departmentdata:DataService,private route:Router) { }
   
   ngOnInit(): void {
+    
   }
 
   adddepartment(){

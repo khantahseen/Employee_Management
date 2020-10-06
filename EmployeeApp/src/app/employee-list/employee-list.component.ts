@@ -23,7 +23,7 @@ export class EmployeeListComponent implements OnInit {
 
   empwithsamedept:employee[];
   errorMessage:string;
-  constructor(private employeedata:DataService) {}
+  constructor(public employeedata:DataService) {}
   //e1:Array<employee>;
   ngOnInit(): void {
     var empEmail=localStorage.getItem('userName');
