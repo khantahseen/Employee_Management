@@ -90,8 +90,6 @@ namespace EmployeeManagementSystem.Controllers
             _context.departments.Add(department);
             await _context.SaveChangesAsync();
             var groups = "HR";
-           // var name = department.DepartmentName;
-            //await this._notificationHubContext.Clients.Group(groups).SendAsync("sendAddDepartmentMessage", name);
             await this.hubContext.Clients.Group(groups).SendAsync("departmentAdded", department.Name + " Department Added by Admin");
             return CreatedAtAction("GetDepartment", new { id = department.DepartmentID }, department);
         }
